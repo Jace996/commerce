@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package ticketing.api.show.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/field_mask.proto";
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+import "query/operation.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+import "ticketing/api/activity/v1/activity.proto";
+import "ticketing/api/location/v1/location.proto";
+import "price/price.proto";
+
+option go_package = "github.com/go-saas/commerce/ticketing/api/show/v1;v1";
+
+
+service ShowService {
+  rpc ListShow (ListShowRequest) returns (ListShowReply){
+    option (google.api.http) = {
+      get: "/v1/ticketing/show",
+      additional_bindings:{
+        post:"/v1/ticketing/show/list",
+        body:"*"
+      }
+    };
+  }
+  rpc GetShow (GetShowRequest) returns (Show){
+    option (google.api.http) = {
+      get: "/v1/ticketing/show/{id}"
+    };
+  }
+  rpc CreateShow (CreateShowRequest) returns (Show){
+    option (google.api.http) = {
+      post: "/v1/ticketing/show",
+      body: "*"
+    };
+  }
+  rpc UpdateShow (UpdateShowRequest) returns (Show){
+    option (google.api.http) = {
+      put: "/v1/ticketing/show/{show.id}",
+      body: "*"
+      additional_bindings{
+        patch: "/v1/ticketing/show/{show.id}",
+        body: "*"
+      }
+    };
+  }
+  rpc DeleteShow (DeleteShowRequest) returns (DeleteShowReply){
+    option (google.api.http) = {
+      delete: "/v1/ticketing/show/{id}"
+    };
+  }
+
+}
+
+message DeleteShowRequest {
+  string id=1;
+}
+message DeleteShowReply {
+  string id=1;
+}
+
+message GetShowRequest {
+  string id=1 [(validate.rules).string.min_len=1,(google.api.field_behavior)=REQUIRED];
+}
+
+message ShowFilter{
+  query.operation.StringFilterOperation id=1;
+  query.operation.StringFilterOperation name =2;
+  query.operation.StringFilterOperation activity_id=3;
+}
+
+message ListShowRequest {
+  int32 page_offset =1;
+  int32 page_size = 2;
+  string search = 3;
+  repeated string sort =4;
+  google.protobuf.FieldMask fields=5;
+  ShowFilter filter =6;
+
+  string after_page_token =10;
+  string before_page_token =11;
+}
+message ListShowReply {
+  int32 total_size =1;
+  int32 filter_size =2;
+  repeated Show items=3;
+
+  optional string next_after_page_token=4;
+  optional string next_before_page_token=5;
+}
+
+message Show{
+  string id=1;
+
+  string name=2;
+  google.protobuf.Timestamp created_at =4;
+
+  string activity_id=10;
+  .ticketing.api.activity.v1.Activity activity=11;
+
+  google.protobuf.Timestamp start_time=12;
+  google.protobuf.Timestamp end_time=13;
+
+  string location_id=20;
+  .ticketing.api.location.v1.Location location=21;
+
+  string hall_id=31;
+  .ticketing.api.location.v1.LocationHall hall=32;
+
+  repeated ShowSalesType sales_types=40;
+
+
+
+  .ticketing.api.location.v1.TicketingMedia main_pic = 52;
+
+  int32 sales_count=100;
+  int32 rest_count=101;
+
+
+}
+
+message ShowSalesType{
+  string id=1;
+  string name=2;
+
+  .ticketing.api.location.v1.SeatGroup seat_group=3;
+  optional string seat_group_id=4;
+
+  google.protobuf.Timestamp saleable_from=100;
+  google.protobuf.Timestamp saleable_to=101;
+  price.InfoPb price =102;
+
+}
+
+
+message UpdateShowSalesType{
+  string id=1;
+  string name=2;
+  string seat_group_id=4;
+  google.protobuf.Timestamp saleable_from=100;
+  google.protobuf.Timestamp saleable_to=101;
+  price.InfoPb price =102;
+}
+
+
+
+message CreateShowRequest {
+  string name=2;
+  string activity_id=10 [(validate.rules).string.min_len=1,(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp start_time=12[(validate.rules).timestamp.required=true,(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp end_time=13[(validate.rules).timestamp.required=true,(google.api.field_behavior) = REQUIRED];
+
+  string location_id=20[(validate.rules).string.min_len=1,(google.api.field_behavior) = REQUIRED];
+
+  string hall_id=30[(validate.rules).string.min_len=1,(google.api.field_behavior) = REQUIRED];
+
+  repeated UpdateShowSalesType sales_types=40;
+
+
+  .ticketing.api.location.v1.TicketingMedia main_pic = 52;
+}
+
+message UpdateShowRequest {
+  UpdateShow show=1 [(validate.rules).message.required=true,(google.api.field_behavior) = REQUIRED];
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message UpdateShow{
+  string id=1 [(validate.rules).string.min_len=1,(google.api.field_behavior) = REQUIRED];
+
+  string name=2;
+  google.protobuf.Timestamp start_time=12[(validate.rules).timestamp.required=true,(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp end_time=13[(validate.rules).timestamp.required=true,(google.api.field_behavior) = REQUIRED];
+
+  repeated UpdateShowSalesType sales_types=40;
+
+
+  .ticketing.api.location.v1.TicketingMedia main_pic = 52;
+}

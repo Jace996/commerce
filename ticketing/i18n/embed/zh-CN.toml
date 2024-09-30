@@ -1,0 +1,48 @@
+[permission.ticketing.location.group]
+other = "场地"
+[permission.ticketing.location.read]
+other = "查看场地"
+[permission.ticketing.location.write]
+other = "增加/修改/删除 场地"
+
+
+[permission.ticketing.activity.group]
+other = "活动"
+[permission.ticketing.activity.read]
+other = "查看活动"
+[permission.ticketing.activity.write]
+other = "增加/修改/删除 活动"
+
+[permission.ticketing.show.group]
+other = "演出"
+[permission.ticketing.show.read]
+other = "查看演出"
+[permission.ticketing.show.write]
+other = "增加/修改/删除 演出"
+
+[permission.ticketing.category.group]
+other = "活动分类"
+[permission.ticketing.category.read]
+other = "读"
+[permission.ticketing.category.write]
+other = "写"
+
+[permission.ticketing.ticket.group]
+other = "票务"
+[permission.ticketing.ticket.read]
+other = "读取票"
+[permission.ticketing.ticket.write]
+other = "增加/修改/删除票"
+
+[ticketing.manager]
+other = "票务管理"
+[ticketing.location]
+other = "场地"
+[ticketing.activity]
+other = "活动"
+[ticketing.category]
+other = "活动分类"
+[ticketing.show]
+other = "演出"
+[ticketing.ticket]
+other = "票务"

@@ -1,0 +1,50 @@
+[permission.ticketing.location.group]
+other = "Location"
+[permission.ticketing.location.read]
+other = "Read Location"
+[permission.ticketing.location.write]
+other = "Write Location"
+
+
+[permission.ticketing.activity.group]
+other = "Activity"
+[permission.ticketing.activity.read]
+other = "Read Activity"
+[permission.ticketing.activity.write]
+other = "Write Activity"
+
+[permission.ticketing.show.group]
+other = "Show"
+[permission.ticketing.show.read]
+other = "Read Show"
+[permission.ticketing.show.write]
+other = "Write Show"
+
+
+[permission.ticketing.ticket.group]
+other = "Show"
+[permission.ticketing.ticket.read]
+other = "Read Show"
+[permission.ticketing.ticket.write]
+other = "Write Show"
+
+[permission.ticketing.category.group]
+other = "Activity Category"
+[permission.ticketing.category.read]
+other = "Read Activity Category"
+[permission.ticketing.category.write]
+other = "Write Activity Category"
+
+
+[ticketing.manager]
+other = "Ticketing Management"
+[ticketing.location]
+other = "Location"
+[ticketing.activity]
+other = "Activity"
+[ticketing.category]
+other = "Activity Category"
+[ticketing.show]
+other = "Show"
+[ticketing.ticket]
+other = "Ticket"
